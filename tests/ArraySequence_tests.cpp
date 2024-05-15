@@ -1,4 +1,5 @@
 #include "ArraySequence_tests.h"
+#include "../DataStructures/ListSequence.h"
 
 void testGetSubSequence()
 {
@@ -62,17 +63,6 @@ void testArraySequenceSetters()
     }
 }
 
-void testArraySequenceSizeConsturctor()
-{
-    ds::ArraySequence<int> arrSeq(5);
-    IS_TRUE(arrSeq.getSize() == 5);
-    for (size_t i = 0; i < arrSeq.getSize(); i++)
-    {
-        IS_TRUE(arrSeq.get(i) == 0);
-    }
-    std::cout << "ArraySequence SizeConstructor test passed" << std::endl;
-}
-
 void testArraySequenceCopyConstructor()
 {
     int items[] = {1, 2, 3, 4, 5};
@@ -125,7 +115,6 @@ void testArraySequence()
 {
     testGetSubSequence();
     testArraySequenceItemsConstructor();
-    testArraySequenceSizeConsturctor();
     testArraySequenceConcat();
     testArraySequenceCopyConstructor();
     testArraySequenceGetters();

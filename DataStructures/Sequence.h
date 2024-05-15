@@ -18,7 +18,6 @@ namespace ds
         virtual Sequence<T> *prepend(const T &value) = 0;
         virtual Sequence<T> *copySequence() = 0;
         virtual Sequence<T> *getSubsequence(int startIndex, int endIndex) = 0;
-        // const reference
         virtual Sequence<T> *concat(const Sequence<T> &other) = 0;
     };
 }

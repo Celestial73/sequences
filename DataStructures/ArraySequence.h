@@ -46,7 +46,6 @@ namespace ds
             }
         }
 
-        // Operators
         T &operator[](int index)
         {
             return array[index];

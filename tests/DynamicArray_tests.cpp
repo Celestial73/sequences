@@ -1,16 +1,5 @@
 #include "DynamicArray_tests.h"
 
-void testSizeConstructor()
-{
-    ds::DynamicArray<int> arr(5);
-    IS_TRUE(arr.getSize() == 5);
-    for (size_t i = 0; i < arr.getSize(); ++i)
-    {
-        IS_TRUE(arr[i] == 0);
-    }
-    std::cout << "DynamicArray sizeConstructor test passed" << std::endl;
-}
-
 void testItemsConstructor()
 {
     int items[] = {1, 2, 3, 4, 5};
@@ -33,6 +22,7 @@ void testCopyDynamicArray()
     }
     std::cout << "DynamicArray copy test passed" << std::endl;
 }
+
 void testArrayEquals()
 {
     ds::DynamicArray<int> arr1(5);
@@ -62,6 +52,7 @@ void testArrayGet()
     {
         std::cout << "As it should have" << std::endl;
     }
+    arr1.set(0, 2);
     a = arr1.get(2);
     IS_TRUE(a == 0);
     std::cout << "DynamicArray get test passed" << std::endl;
@@ -94,6 +85,7 @@ void testArrayBrackets()
     {
         std::cout << "As it should have" << std::endl;
     }
+    arr1.set(0, 2);
     a = arr1[2];
     IS_TRUE(a == 0);
     std::cout << "DynamicArray brackets operator test passed" << std::endl;
@@ -114,7 +106,6 @@ void testDynamicArray()
     testArrayGet();
     testArrayEquals();
     testItemsConstructor();
-    testSizeConstructor();
     testCopyDynamicArray();
     std::cout << "DYNAMICARRAY TESTS PASSED" << std::endl
               << std::endl;

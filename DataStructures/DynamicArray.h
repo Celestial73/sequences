@@ -4,18 +4,13 @@
 namespace ds
 {
     // second arg is a null value
-    template <class T, T nullvalue>
+    template <class T>
     class DynamicArray
     {
     public:
         // Constructors
         DynamicArray(int size) : size(size), data(new T[size])
         {
-            for (size_t i = 0; i != size; ++i)
-            {
-                // hardcoded 0
-                data[i] = 0;
-            }
         }
 
         DynamicArray(const T *items, int count) : size(count), data(new T[size])
@@ -101,7 +96,7 @@ namespace ds
             return data[index];
         }
 
-        void set(T value, int index)
+        void set(const T value, int index)
         {
             validateListNotEmpty(__FUNCTION__);
             validateIndex(index, __FUNCTION__);
@@ -148,7 +143,7 @@ namespace ds
 
         void validateAccessByIndex(int index, const char *function) const
         {
-            validateListNotEmpty(__FUNCTION__);
+            validateListNotEmpty(function);
             validateIndex(index, function);
         }
     };

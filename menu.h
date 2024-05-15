@@ -77,6 +77,7 @@ void runTests()
     testDynamicArray();
     testArraySequence();
     // testImmutableArraySequence();
+    testImmutableArraySequence();
     testListSequence();
 }
 

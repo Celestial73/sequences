@@ -15,8 +15,8 @@
                 "-g",
                 "${fileDirname}\\tests\\ArraySequence_tests.cpp",
                 "-g",
-                // "${fileDirname}\\tests\\ImmutableArraySequence_tests.cpp",
-                // "-g",
+                "${fileDirname}\\tests\\ImmutableArraySequence_tests.cpp",
+                "-g",
                 "${fileDirname}\\tests\\ListSequence_tests.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"

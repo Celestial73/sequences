@@ -54,27 +54,22 @@ namespace ds
             return array.getSize();
         }
 
-        T getFirst()
+        T getFirst() const
         {
             return array[0];
         }
 
-        T getLast()
+        T getLast() const
         {
             return array[array.getSize() - 1];
         }
 
-        T &get(int index) const
+        T get(int index) const
         {
-            return array.get(index);
+            return array.getValue(index);
         }
 
-        void set(T item, int index)
-        {
-            array.set(item, index);
-        }
-
-        T &operator[](int index) const
+        T operator[](int index) const
         {
             return array[index];
         }
@@ -84,70 +79,86 @@ namespace ds
             return array == other.array;
         }
 
-        ImmutableArraySequence<T> *getSubsequence(int startIndex, int endIndex)
+        ImmutableArraySequence<T> *set(const T item, int index) const
+        {
+            DynamicArray<T> newArray = DynamicArray<T>(array);
+            newArray[index] = item;
+            ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(newArray);
+
+            return newSeq;
+        }
+
+        ImmutableArraySequence<T> *getSubsequence(int startIndex, int endIndex) const
         {
             if (startIndex > endIndex)
             {
                 std::cout << __FUNCTION__ << "function failed" << std::endl;
                 throw std::invalid_argument("InvalidRange");
             }
+
             ImmutableArraySequence<T> *subSequence = new ImmutableArraySequence<T>;
             for (size_t i = startIndex; i <= endIndex; i++)
             {
-                subSequence->append(array.get(i));
+                subSequence->append(array.getValue(i));
             }
             return subSequence;
         }
 
-        ImmutableArraySequence<T> *append(T item)
+        ImmutableArraySequence<T> *append(T item) const
         {
-            ImmutableArraySequence<T> *newImmutableArraySequence = new ImmutableArraySequence<T>(this);
-            array.resize(getSize() + 1);
-            array[getSize() - 1] = item;
-            swapImmutableArraySequence(*newImmutableArraySequence);
-            return newImmutableArraySequence;
-        }
-
-        ImmutableArraySequence<T> *prepend(T item)
-        {
-            ImmutableArraySequence<T> *newImmutableArraySequence = new ImmutableArraySequence<T>(this);
-            array.resize(array.getSize() + 1);
-            for (int i = array.getSize() - 2; i >= 0; i--)
+            int currentSize = getSize();
+            DynamicArray<T> newArray = DynamicArray<T>(currentSize + 1);
+            for (int i = 0; i < currentSize; i++)
             {
-                array[i + 1] = array[i];
+                newArray.set(get(i), i);
             }
-            array[0] = item;
-            swapImmutableArraySequence(*newImmutableArraySequence);
-            return newImmutableArraySequence;
+            newArray.set(item, currentSize);
+            ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(newArray);
+            return newSeq;
         }
 
-        ImmutableArraySequence<T> *insertAt(T item, int index)
+        ImmutableArraySequence<T> *prepend(T item) const
         {
-            ImmutableArraySequence<T> *newImmutableArraySequence = new ImmutableArraySequence<T>(this);
-            array.resize(array.getSize() + 1);
-            for (int i = array.getSize() - 2; i >= index; i--)
+            int currentSize = getSize();
+            DynamicArray<T> newArray = DynamicArray<T>(currentSize + 1);
+            for (int i = 1; i < currentSize + 1; i++)
             {
-                array[i + 1] = array[i];
+                newArray.set(get(i - 1), i);
             }
-            array[index] = item;
-            swapImmutableArraySequence(*newImmutableArraySequence);
-            return newImmutableArraySequence;
+            newArray.set(item, 0);
+            ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(newArray);
+            return newSeq;
         }
 
-        ImmutableArraySequence<T> *copySequence()
+        ImmutableArraySequence<T> *insertAt(T item, int index) const
+        {
+            ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(this);
+            newSeq->array.resize(getSize() + 1);
+            for (int i = newSeq->array.getSize() - 2; i >= index; i--)
+            {
+                newSeq->array.set(newSeq->array[i], i + 1);
+            }
+            newSeq->array[index] = item;
+            return newSeq;
+        }
+
+        ImmutableArraySequence<T> *copySequence() const
         {
             return (new ImmutableArraySequence<T>(*this));
         }
 
-        ImmutableArraySequence<T> *concat(ImmutableSequence<T> *other)
+        ImmutableArraySequence<T> *concat(const ImmutableSequence<T> &other) const
         {
-            ImmutableArraySequence<T> *newImmutableArraySequence = new ImmutableArraySequence<T>(this);
-            int otherSize = other->getSize();
+            int thisSize = getSize();
+            int otherSize = other.getSize();
+            DynamicArray<T> newArray = DynamicArray<T>(this->array);
+            newArray.resize(thisSize + otherSize);
             for (int i = 0; i < otherSize; i++)
             {
-                newImmutableArraySequence->append(other->get(i));
+                newArray.set(other.get(i), thisSize + i);
             }
-            return newImmutableArraySequence;
+            ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(newArray);
+            return newSeq;
         }
     };
 }

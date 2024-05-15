@@ -6,18 +6,17 @@ namespace ds
     class ImmutableSequence
     {
     public:
-        // const to all methods
-        virtual T getFirst() = 0;
-        virtual T getLast() = 0;
-        virtual T &get(int index) const = 0;
-        virtual T &operator[](int index) const = 0;
-        virtual void set(T data, int index) = 0;
+        virtual T getFirst() const = 0;
+        virtual T getLast() const = 0;
+        virtual T get(int index) const = 0;
+        virtual T operator[](int index) const = 0;
         virtual int getSize() const = 0;
-        virtual ImmutableSequence<T> *insertAt(const T data, int index) = 0;
-        virtual ImmutableSequence<T> *append(T value) = 0;
-        virtual ImmutableSequence<T> *prepend(T value) = 0;
-        virtual ImmutableSequence<T> *copySequence() = 0;
-        virtual ImmutableSequence<T> *getSubsequence(int startIndex, int endIndex) = 0;
-        virtual ImmutableSequence<T> *concat(ImmutableSequence<T> *other) = 0;
+        virtual ImmutableSequence<T> *set(const T data, int index) const = 0;
+        virtual ImmutableSequence<T> *insertAt(const T data, int index) const = 0;
+        virtual ImmutableSequence<T> *append(const T value) const = 0;
+        virtual ImmutableSequence<T> *prepend(const T value) const = 0;
+        virtual ImmutableSequence<T> *copySequence() const = 0;
+        virtual ImmutableSequence<T> *getSubsequence(int startIndex, int endIndex) const = 0;
+        virtual ImmutableSequence<T> *concat(const ImmutableSequence<T> &other) const = 0;
     };
 }
